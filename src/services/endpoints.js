@@ -1,0 +1,17 @@
+export const LOGIN_PATH = 'login'
+export const SIGN_UP_PATH = 'signup'
+
+// user
+export const GET_USER_PATH = 'user'
+export const GET_MY_QUESTIONS_PATH = 'questions/my'
+export const GET_MY_QUESTIONS_TAGS_PATH = 'get/tags'
+export const GET_MY_QUESTIONS_CATEGORIES_PATH = 'get/category'
+export const QUESTION_CREATE_PATH = 'question/create'
+export const GET_QUESTIONS_PATH = '/questions'
+export const FIND_QUESTION_PATH = '/questions/find'
+export const GET_QUESTION_PATH = 'question/:id'
+export const SEARCH_QUESTIONS_PATH = 'questions/search'
+export const POST_USER_INFO_PATH = 'post/user/info'
+export const CHANGE_USER_PASSWORD = 'post/change/password'
+export const TAKE_USER_NOTIFICATION_MY = 'notification/my'
+export const TAKE_FAVORITE_COURSES_PATH = 'my/follower/course'
