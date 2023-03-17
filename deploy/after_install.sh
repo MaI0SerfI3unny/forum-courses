@@ -1,6 +1,5 @@
 #!/bin/bash
-APP_DIR="/var/www/html/askHowApp"
-
+APP_DIR="/var/www/html/askHow"
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -11,7 +10,4 @@ sudo chown ubuntu:www-data -R $APP_DIR
 
 # Install NPM modules
 cd $APP_DIR
-yarn install
-
-# Build App (Next)
-yarn build
+/usr/bin/npm install

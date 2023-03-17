@@ -1,7 +1,0 @@
-export { default as useGetMyQuestions } from './useGetMyQuestions'
-export { default as useGetTags } from './useGetTags'
-export { default as useGetCategories } from './useGetCategories'
-export { default as useGetQuestions } from './useGetQuestions'
-export { default as useFindQuestion } from './useFindQuestion'
-export { default as useGetQuestion } from './useGetQuestion'
-export { default as useSearchQuestions } from './useSearchQuestions'

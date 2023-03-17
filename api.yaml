@@ -1,0 +1,917 @@
+swagger: '2.0'
+info:
+  title: API "ASK.HOW"
+  description: Backend version for forum
+  version: 1.0.0
+
+paths:
+  /api/signup:
+    post:
+      summary: Create new user
+      tags: [Register]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              email: 'example@gmail.com',
+              password: '0983134',
+              repeatPassword: '0983134',
+              phone: '+380683437651',
+              name: 'Example',
+              country: 'Canada',
+            }
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, message: 'User has been created' }
+  /api/login:
+    post:
+      summary: Login which return jwt token
+      tags: [Login]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { email: 'example@gmail.com', password: '0983134' }
+      responses:
+        200:
+          schema:
+            type: object
+            example:
+              {
+                status: 200,
+                message: 'Login was succesfully',
+                data: 'jwt_token',
+              }
+  /api/auth/google:
+    get:
+      summary: Use for this tag <a> or some (Its not API request)
+      tags: [Login]
+  /api/post/change/password:
+    post:
+      summary: Profile settings for change password
+      tags: [Profile]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              currentPass: '0983134',
+              newPass: '111111',
+              repeatNewPass: '111111',
+            }
+      responses:
+        200:
+          schema:
+            type: object
+            example:
+              { status: 200, message: 'Password was succesfully changed' }
+  /api/post/user/info:
+    post:
+      summary: Profile information about user
+      tags: [Profile]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: {} }
+  /api/post/user/info/change:
+    post:
+      summary: Change (update) information about user (No one params is required. But you must send me something)
+      tags: [Profile]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              email: 'example@gmail.com',
+              phone: '+380685436751',
+              name: 'Victor',
+              country: 'Canada',
+            }
+      responses:
+        200:
+          schema:
+            type: object
+            example:
+              {
+                status: 200,
+                message: 'Information user was successfully changed',
+              }
+  /api/notification/my:
+    post:
+      summary: Get all notification user (On post all notification update status read on true)
+      tags: [Profile]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/notification/my/count_unread:
+    post:
+      summary: Return count unread notification user
+      tags: [Profile]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, result: 0 }
+  /api/post/avatar/change:
+    post:
+      summary: change avatar photo for user
+      tags: [Profile]
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - in: formData
+          name: avatar
+          type: file
+          required: true
+      responses:
+        200:
+          schema:
+            type: object
+            example: { data: 200, message: 'Avatar was successfully change' }
+  /api/get/tags:
+    get:
+      summary: Get all tags
+      tags: [Tags]
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/get/category:
+    get:
+      summary: Get all categories
+      tags: [Category]
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/question/{id}:
+    get:
+      summary: Get a question by ID
+      tags: [Question]
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: {} }
+  /api/questions/my:
+    get:
+      summary: Get all questions user
+      tags: [Question]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/questions:
+    get:
+      summary: Get all questions
+      tags: [Question]
+      parameters:
+        - in: query
+          name: page
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/question/create:
+    post:
+      summary: Create new question
+      tags: [Question]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            { title: 'How to learn Javascript?', categoryId: 5, tags: [1, 2] }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Question was create successfully' }
+  /api/get/settings:
+    post:
+      summary: Get settings notification user
+      tags: [NotificationSettings]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        schema:
+          type: object
+          example:
+            {
+              status: 200,
+              data:
+                [
+                  { 'name': 'comments', 'email': true, 'push': true },
+                  { 'name': 'newAnswer', 'email': true, 'push': true },
+                  { 'name': 'sysNotifications', 'email': true, 'push': true },
+                ],
+            }
+  /api/post/settings/update:
+    post:
+      summary: Update settings notification user (SETTINGS MUST BE PARSE IN STRING USED JSON.STRINGIFY)
+      tags: [NotificationSettings]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              setting:
+                {
+                  'commentsPush': false,
+                  'commentsEmail': false,
+                  'newAnswerPush': false,
+                  'newAnswerEmail': false,
+                  'systemPush': false,
+                  'systemEmail': false,
+                },
+            }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Setting was successfully updated' }
+  /api/get/subjects:
+    get:
+      summary: Get list subjects
+      tags: [Subject]
+      parameters:
+        - in: query
+          name: page
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+        - in: query
+          name: idUser
+          type: integer
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/subject/create:
+    post:
+      summary: Create new subject
+      tags: [Subject]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              type: 'general',
+              options: ['Php', 'Laravel', 'Html'],
+              prerequisites: ['Backend', 'MVP', 'PHP'],
+              categoryId: 1,
+              title: 'How start learn Backend',
+              questionId: 1,
+            }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Subject was create successfully' }
+  /api/subject/option/add:
+    post:
+      summary: Add new specific subject for general subject
+      tags: [Subject]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { name: 'C++', subjectId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Subject was create successfully' }
+  /api/subject/like:
+    post:
+      summary: Set like/dislike for subject
+      tags: [Subject]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - in: body
+          name: body
+          type: object
+          example: { type: 'like', subjectId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Like was set for subject' }
+  /api/mark/subject/set:
+    post:
+      summary: set mark for subject (min 0, max 5)
+      tags: [Marks]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { value: 5, subjectId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Mark was set successfully' }
+  /api/follower/subject:
+    post:
+      summary: add or remove subject in favorites
+      tags: [Favorites]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { subjectId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Subject was added in favorites' }
+  /api/follower/course:
+    post:
+      summary: add or remove course in favorites
+      tags: [Favorites]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { courseId: 1 }     
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Course was added in favorites' } 
+  /api/my/follower/subject:
+    get:
+      summary: Get list favorites which followed (Subjects)
+      tags: [Favorites]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - in: query
+          name: page
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/my/follower/course:
+    get:
+      summary: Get list favorites which followed (Course)
+      tags: [Favorites]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - in: query
+          name: page
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }      
+  /api/questions/search:
+    post:
+      summary: Search question by title, category and tags
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { tag: [], category: [], title: 'How to' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/questions/find:
+    post:
+      summary: simple search question by title
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { title: 'How to' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/subject/search:
+    post:
+      summary: Search subject by title
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { title: 'How to' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/tool/search:
+    post:
+      summary: Search tool by title
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { title: 'Adobe', type: 'Program' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/courses:
+    get:
+      summary: Get list courses
+      tags: [Course]
+      parameters:
+        - in: query
+          name: page
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/course/{id}:
+    get:
+      summary: Get a course by ID
+      tags: [Course]
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        200:
+          schema:
+            type: object
+            example: { status: 200, data: [] }
+  /api/course/create:
+    post:
+      summary: Create new course recommended
+      tags: [Course]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: {
+            gallery: [],
+            name: "Simple learch C++ from scratch",
+            type: "Audio/Podcast",
+            link: "https://gmail.com/",
+            source: "udemy",
+            price: 0,
+            typePayment: "Free",
+            resource: [{ subjectId: 1, type: 'Beginner' }],
+            additional: {
+                'time': 256,
+                'description': 'Thats amazing course. I recommend',
+                'tools': [1,2],
+                'typeLesson': ['Video', 'Audio', 'Book'],
+                'content':
+                  [
+                    {
+                      'name': 'Section 1 - Introduction to the Course',
+                      'content': [],
+                    },
+                    {
+                      'name': 'Section 2 - Introduction to the Course',
+                      'content':
+                        [
+                          {
+                            'name': 'Introduction to the Course',
+                            'time': '10:20',
+                            'description': '',
+                          },
+                          {
+                            'name': 'Introduction to the Course',
+                            'time': '10:20',
+                            'description': '',
+                          },
+                        ],
+                    },
+                  ],
+              }
+          }
+      responses:
+        schema:
+          type: object
+          example:
+            {
+              status: 200,
+              message: 'Recommended course was create successfully',
+            }
+  /api/course/my:
+    get:
+      summary: Get all course user
+      tags: [Course]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: [] }
+  /api/course/set/like:
+    post:
+      summary: Set like/dislike for course
+      tags: [Course]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { type: 'like', courseId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }          
+  /api/udemy/search:
+    post:
+      summary: Search course in udemy
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { search: 'How to learn' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/udacity/search:
+    post:
+      summary: Search course in udacity
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { search: 'Product Manager' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/lynda/search:
+    post:
+      summary: Search course in lynda
+      tags: [Search]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { search: 'Python' }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/udemy/info:
+    post:
+      summary: Return info about course from udemy by id
+      tags: [Udemy]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { id: 1720356 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/udemy/content:
+    post:
+      summary: Return content about course from udemy by id and page
+      tags: [Udemy]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { id: 1720356 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/udacity/content:
+    post:
+      summary: Return content course (some course cann`t have content for example with typePayment Free)
+      tags: [Udacity]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              link: 'https://www.udacity.com/course/data-analyst-nanodegree--nd002',
+            }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/lynda/content:
+    post:
+      summary: Return content about course from Lynda by link
+      tags: [Lynda]
+      parameters:
+        - name: body
+          in: body
+          type: object
+          example: { link: "https://www.linkedin.com/learning/python-quick-start?trk=learning-serp_learning-search-card_search-card&upsellOrderOrigin=default_guest_learning" }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/comment/{id}:
+    get:
+      summary: get comment by courseId
+      tags: [Comments]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            required: true
+      responses:
+        schema:
+          type: object
+          example: { status: 200, data: [] }
+  /api/comment/course/create:
+    post:
+      summary: Create new message for course
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              courseId: 1,
+              message: 'Increadable',
+              type: 'pros',
+              title: 'Good service',
+            }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Comment was publish' }
+  /api/comment/course/like:
+    post:
+      summary: Set like for comments. Type must be 'like' or 'dislike'
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example: { type: 'like', commentId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Like was set for comment' }
+  /api/comment/course/multiple/create:
+    post:
+      summary: Create new message for course
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            {
+              cons: { title: 'Bad service', message: 'Not recommend' },
+              pros: { title: 'Good service', message: 'Really good' },
+              exp:
+                {
+                  title: 'I end teach that course',
+                  message: 'Now i wanna tel about my expirience',
+                },
+              courseId: 1,
+            }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Comment was publish' }
+  /api/comment/course/update:
+    post:
+      summary: Update info comment
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            { message: 'Really good', title: 'Good service', commentId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Comment was succussfully changed' }
+  /api/comment/course/reply:
+    post:
+      summary: Reply comment
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - name: body
+          in: body
+          type: object
+          example:
+            { message: 'Really good', title: 'Good service', commentId: 1 }
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Comment was publish' }
+  /api/comment/course/delete/{id}:
+    delete:
+      summary: Delete comment from course (you can only delete your)
+      tags: [Comments]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 'JWTTOKEN'
+        - in: path
+          name: id
+          schema:
+            type: string
+            required: true
+      responses:
+        schema:
+          type: object
+          example: { status: 200, message: 'Comment was success deleted' }

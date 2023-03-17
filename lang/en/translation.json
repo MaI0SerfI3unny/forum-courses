@@ -1,0 +1,6 @@
+{
+  "hoverEmailAnswer": "User {{userCreator}} create answer on your question {{titleQuesstion}}'",
+  "textEmailAnswer": "User {{userCreator}} create answer on your question '{{titleQuesstion}}' in AskHow. Hurry up to view !!",
+  "hoverEmailComment": "User {{userCreator}} commented on your course recommendation '{{titleCourse}}'",
+  "textEmailComment": "User {{userCreator}} commented on your course recommendation '{{titleCourse}}' in AskHow. Hurry up to view !!"
+}

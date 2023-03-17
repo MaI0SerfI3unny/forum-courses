@@ -1,9 +1,9 @@
 # Definition file for AWS CodeDeploy
 version: 0.0
-os: linux 
+os: linux
 files:
   - source: /
-    destination: /var/www/html/askHowApp/
+    destination: /var/www/html/askHow/
 hooks:
   BeforeInstall:
     - location: deploy/before_install.sh
@@ -11,7 +11,7 @@ hooks:
       runas: ubuntu
   AfterInstall:
     - location: deploy/after_install.sh
-      timeout: 600
+      timeout: 300
       runas: ubuntu
   ApplicationStart:
     - location: deploy/application_start.sh

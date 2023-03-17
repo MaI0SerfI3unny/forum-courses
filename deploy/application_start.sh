@@ -5,9 +5,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Stop the apps and restart
+# Stop the app and restart
 /usr/bin/pm2 stop all
 /usr/bin/pm2 delete all
 
 cd $APPS_DIR
-/usr/bin/pm2 start 
+/usr/bin/pm2 start

@@ -1,0 +1,12 @@
+[
+    { "type":"Tool", "name": "Figma" },
+    { "type":"Program", "name": "Visual Studio" },
+    { "type":"Tool", "name": "Git" },
+    { "type":"Tool", "name": "Adobe Photoshop" },
+    { "type":"Tool", "name": "Adobe Effects" },
+    { "type":"Tool", "name": "Movavi Editor" },
+    { "type":"Tool", "name": "Node" },
+    { "type":"Program", "name": "Visual Studio Code" },
+    { "type":"Program", "name": "Microsoft Word" }
+  ]
+  
